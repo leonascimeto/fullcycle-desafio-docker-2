@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+
+  node-app:
+    container_name: node-fullcycle
+    build: ./node-app
+    volumes:
+      - ./node-app/volumes:/app/volumes
+    depends_on:
+      - mysql
+    networks:
+      - fullcycle-network
+
+  mysql:
+    container_name: mysql-fullcycle
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nodedb
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - fullcycle-network
+
+  nginx:
+    container_name: nginx-fullcycle
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - node-app
+    networks:
+      - fullcycle-network
+
+networks:
+  fullcycle-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
