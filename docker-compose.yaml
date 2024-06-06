@@ -5,6 +5,8 @@ services:
   node-app:
     container_name: node-fullcycle
     build: ./node-app
+    ports:
+      - "3000:3000"
     volumes:
       - ./node-app/volumes:/app/volumes
     depends_on:
