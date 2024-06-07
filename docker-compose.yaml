@@ -7,8 +7,6 @@ services:
     build: ./node-app
     ports:
       - "3000:3000"
-    volumes:
-      - ./node-app/volumes:/app/volumes
     depends_on:
       mysql:
         condition: service_healthy
